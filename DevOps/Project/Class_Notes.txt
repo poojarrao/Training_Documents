@@ -1,0 +1,371 @@
+Capstone Project ::: https://github.com/PL-DevOps-Cloud-2705/BankingWebApp
+
+
+########################
+Day 33 - 30th July 2026
+########################
+		
+	- DevOps Project ::: Banking Domain
+
+	DevOps Assessment :
+	
+		- Interact with all the teams and collect the detailed requirements 
+		
+		
+		
+	Phase 1 :
+		-> 	Infra-Structure Provisioning and Configurations 
+				- Using Terraform and Ansible 
+				- Using AWS Console 
+		
+	
+	Phase 2 :
+		-> 	Automation of Application Builds & Deployments  
+				- Using Jenkins CICD Pipelines
+		
+		
+	Phase 3 :
+		-> 	Monitoring of Infra-Structure
+				- Using Prometheus & Grafana
+				
+				
+				
+				
+				
+	What are the Servers(VM) needed ?
+	
+	What are the tools to be configured in each server ?
+	
+	What are the stages of CICD Pipeline ?
+
+			
+Implementation Procedures/Steps :::	
+
+	
+	
+	
+		1. List of Servers :: 
+		
+			Infra-Structure Management Team's Perspectives :
+			
+				- Create using AWS Console 
+				
+				- Create using Terraform / Ansible 
+				
+						VM ==> Install Terraform & Ansible 
+				
+				
+			
+			On DevOps Perspectives :	# Create CICD Pipeline ::			
+
+				- Jenkins_Master 						VM1 	
+					- Jenkins_SlaveNode(Build_Server)	VM2 
+				
+				- Kubernetes_Master						VM3
+					- Kubernetes_WorkerNode1			VM4 
+					- Kubernetes_WorkerNode2			VM5 
+					- Kubernetes_WorkerNode3			VM6
+		
+		
+			Production Support/Monitor Teams' Perspective 
+		
+				- Monitor the Kubernetes Cluster/Jenkins_Slave_Nodes using Prometheus & Grafana :				
+				
+					- Dedicated Monitoring Server! 	VM						# Monitor Jenkins_Master & Jenkins_Slave_Nodes
+				
+					- Dedicated Monitoring Services(Prometheus & Grafana)	# To Monitor Kubernetes Cluster & Pods
+				
+				
+			Servers & it's purpose :::
+			
+			
+				- Jenkins_Master 						VM1 	# To create CICD Pipeline Jobs and schedule it to run in Slave Nodes	
+				
+					- Jenkins_SlaveNode(Build_Server)	VM2 	# Checkout the Source_Code for GIT
+																# Compile the Source Code
+																# Create Artifacts
+																# Perform Unit Testing 
+																# Create Application Image
+																# Publish the Application Image to Container Registry
+																
+				
+				- Kubernetes_Master						VM3		# Schedule the Pods Deployment 
+																# Execute Kubernetes Monitoring Services using Prometheus & Grafana
+													
+					- Kubernetes_WorkerNode1			VM4 	# Execute the Pods
+					- Kubernetes_WorkerNode2			VM5 	# Execute the Pods
+					- Kubernetes_WorkerNode3			VM6		# Execute the Pods	
+				
+				
+				- Monitoring Server 					VM7		# To Monitor Jenkins_Master & Jenkins_Slave_Nodes
+																# Create Monitoring Dashboards
+				
+				
+				
+				
+				
+		2. List of Tools :: 				
+				
+				- Jenkins_Master 						VM1 	# git,jdk,jenkins
+					- Jenkins_SlaveNode(Build_Server)	VM2 	# git,jdk,maven,docker
+					
+				- Kubernetes_Master						VM3		# All Kubernetes Components	
+					- Kubernetes_WorkerNode1			VM4 
+					- Kubernetes_WorkerNode2			VM5 
+					- Kubernetes_WorkerNode3			VM6
+					
+				
+				Manage the Credentials to access DockerHub,Jenkins_SlaveNodes,Kubernetes,Github(private repo)
+				
+						goto jenkins dashboard 
+							-- Manage Jenkins 
+								-- Credential 
+									-- using dockerhub username and access token				
+
+		Integration of Kubernetes Master Node with Jenkins Master Node.
+		
+			- Using Publish over ssh plugins, integrate Kubernetes_Master Node to Jenkins Master Node
+			
+			- And Execute kubectl create command using Publish over ssh plugins
+			
+			--> 1. Create a devopsadmin - User in Kubernetes_Master
+			
+			--> 2. Create SSH Keys to devopsadmin - User
+			
+			--> 3. Ensure that devopsadmin - User have access to execute kubectl commands
+			
+			--> 4. Use, the Kubernetes - Master Node's - Private IP Address,User_Name and Credential to config in Jenkins - Publish Over SSH
+			
+			--> 5. Create a Pipeline Deployment Stage using Publish Over SSH Plugins step
+					- To copy the kubernetes manifest file - *.yaml file from jenkins_Slave Node to Kubernetes Master Node.
+					- To execute a command : kubectl apply -f kubernetesdeploy.yaml
+				
+		
+					
+				
+				
+
+
+		3. CICD Pipeline Stages :::
+		
+			- SCM Checkout 
+			
+			- Application Build 
+			
+			- Application Image Build
+			
+			- Login to DockerHub 
+
+			- Publish Application Image to DockerHub Container Registry
+			
+			- Deploy the Application Images to Target Environments(QA/PROD) using Kubernetes				
+					
+					Application Image: 
+	
+						
+						
+		Source_Code 				Artifacts 			Application_Image 
+		
+		
+			webapp_Code_v1.0	==>	webapp.war_v1.0	 ==> webapp_image:v1.0	 ==> Deployed to QA/UAT/PROD
+					
+				
+			webapp_Code_v1.1	==>	webapp.war_v1.1	 ==> webapp_image:v1.1	 ==> Deployed to QA/UAT/PROD			
+				
+				
+				
+		Enhancement :
+		
+		
+		- Enhance the project using github webhook(Make the code changes and trigger the build) & Email Notification	
+		
+		- Using Ansible, Deploy the Manifest to Kubernetes Master and Execute Kubectl commands as mentioned below :
+
+
+			--> Create a Pipeline Deployment Stage using Ansible
+			
+					- To copy the kubernetes manifest file - *.yaml file from jenkins_Slave Node to Kubernetes Master Node.
+					
+					- To execute a command : kubectl apply -f kubernetesdeploy.yaml
+					
+					
+			--> Using Prometheus & Grafana capture the Pods Execution status and Resource utilization
+				
+		
+			
+
+
+	
+			
+########################
+Day 34 - 31st July 2026
+########################
+			
+	GitOps : Terraform & Ansible
+	
+	
+	Scenario 1 :::
+	
+		Jenkins_Pipeline-1: Provision & Configure Test Server (IAC Server -> Terraform,Ansible,Controller
+		
+		
+			SCM-Checkout 	-->		Create New_QA_Server(Terraform)		-->		Configure New_QA_Server(Ansible)
+		
+		
+		CICD_Pipeline-1:
+		
+			SCM-Checkout --> Application_Build --> Deploy_To_New_QA_Server --> Automate_QA_Testing --> Deploy_To_PROD --> Prod_Testing_Implementation 
+			
+			
+
+	Scenario 2 :::		 Core GitOps Process.
+	
+	
+		CICD_Pipeline1 :
+		
+		
+			SCM_Checkout	--> 	Application_Build	-->	 Create New_QA_Server(Terraform)  -->	Configure New_QA_Server(Ansible)
+			
+																												|
+																												|
+																												|
+																												|
+																									
+																									   Deploy_To_New_QA_Server
+																									   
+																									   
+																												|
+																												|
+																												|
+																												|
+																												
+																									    Automate_QA_Testing 
+																										
+																												|
+																												|
+																												|
+																												|
+																												
+																										Destroy the New_QA_Server
+																										
+																												|
+																												|
+																												|
+																												|									
+																												
+																										  Deploy_To_PROD
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+	GITOps Approach :::
+	
+	Scenario1 :
+
+		Pipeline1 :
+		Source_Code Repo :
+		
+		- SCM-Checkout --> Create New_Test_Server(Terraform) --> Configure New_Test_Server(Ansible)
+
+GitOps ::::
+
+	Infra-structure Provisioning & Configurations ::::
+	
+	
+	Used to the Create and Configure resources dynamically!
+	
+	Terraform / Ansible to Create Resources using DevOps Pipelines(Jenkins/Bamboo/Az Pipelines/Github Actions)!
+	
+	
+Scenarios :::
+	
+	Scenario 1. 
+	
+		Pipeline 1:
+		
+			SCM_Checkout 	---> 	Application Build 		--->		Deploy to Target_Server
+		
+		
+	
+	Scenario 2 :	
+	
+		Pipeline 1:				
+			SCM_Checkout 	--->	Create a New_Target_Server(Terraform)		---> 	Configure New_Target_Server(Ansible)
+			
+			
+		Pipeline 2:		
+			SCM_Checkout 	---> 	Application Build 		--->		Deploy to New_Target_Server	
+			
+			
+	
+	
+	Scenario 3 : GitOps:		Repo1 -> Application_Source_Code & Infra-structure IAC (Terraform/Ansible Scripts)
+	
+		Pipeline 1:
+		Jenkins 
+		(Jenkins_SlaveNode - Build Server)
+		
+			SCM_Checkout -->	Application_Build --> Create a New_QA_Test_Server(Terraform) ---> Configure New_QA_Test_Server(Ansible)
+			
+																												|
+																												|
+																												|
+																												|
+																								
+																										Automate QA Testing
+																										
+																												|
+																												|
+																												|
+																												|
+																												
+																										 Notify the Users	--- Delete New_QA_Test_Server	
+	
+																												|
+																												|
+																												|(Success)
+																												|
+																												
+																										  Deploy to Prod	
+	
+	
+	
+	
+	
+	
+	

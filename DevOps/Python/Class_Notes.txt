@@ -1,0 +1,121 @@
+
+########################
+Day 32 - 24th July 2026
+########################
+
+	- Fundamentals of Python ::::
+	
+		- Console Application 
+		
+		- Web Applications 		--> 
+		
+			- Web Application Framework --> Django / flask / Streamlit 
+			
+	Fundamentals of Python :::
+	
+		- Create Python Console Applications 
+		- Create Python Web Application
+		
+		
+	Scripts: 
+	
+	DevOps ==> MLOps => 
+	
+Overview of Python
+Features, Benefits, Uses of Python
+Installation and Setup of Python Environment
+Various Types of Sequences in Python
+File Operations
+Python Functions
+OOPs Concepts
+Modules
+Errors and Exception Handling
+Python Console based application and Web Application using Flask :::
+
+
+########################
+Day 33 - 27th July 2026
+########################
+
+	- Install Python on Local Machine.
+	
+		- https://www.python.org/downloads/
+		
+		- Visual Studio Code - IDE 
+	
+	- Python Scripts 
+	
+	
+	- Python Web Applications :::
+	
+	
+	- Web Application :
+	
+		-> Web Application Framework :
+		
+			-> Flask 		==> Lightweight yet powerfull framework for web application using Python
+			-> Django 		==>	Create Web-Application using Python/.Net Framework
+			-> Streamlit	==> Create Web Application for API, AI-ML Model	- chat-bot
+	
+	- Flask Web Application Framework: 
+	
+		- Create a Project Folder.
+	
+Create Web Application using Flask Web Application Framework
+	
+##################################
+
+Folder Structure :
+
+	My-WebApp-Project
+		app.py
+		templates
+			sample.html
+			
+##################################
+		
+		Open New Terminal :			
+			
+			Install : 	Web Application Framework
+				pip install flask
+		
+			Create app.py 
+		
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+
+def sample():
+	return render_template("sample.html")
+
+if "__name__" == "__main__":
+	app.run(debug=True)	
+	
+	
+		Create "templates" folder at root level :::
+				Create Html files :: eg. sample.html 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>www.loksaieta.com</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="jumbotron" style="background-color:white">
+      <img src="https://octodex.github.com/images/spidertocat.png" alt="Spidertocat"
+           class="img-responsive center-block" style="width:250px"/>
+      <h2 class="text-center">Hello Team</h2>
+      <p class="text-center">Python Flask Web App Demo. </p>
+  </div>
+</body>
+</html>
+
+		set FLASK_APP=sample
+	
+		python -m flask run	
+		
+		Running on: http://127.0.0.1:5000			# 5000 is the default port for Flask Web App Framework.
